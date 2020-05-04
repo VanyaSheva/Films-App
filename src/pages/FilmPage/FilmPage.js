@@ -29,10 +29,11 @@ class FilmPage extends Component {
   handleGoBack = () => {
     if (!category) {
       this.props.history.push({
-        pathname: "/",
+        pathname: "/Films-App",
       });
       return;
     }
+
     this.props.history.push({
       pathname: "/films",
       search: `?category=${category}`,

@@ -25,7 +25,7 @@ class App extends Component {
         <main>
           <Suspense fallback={<h1>Loading...</h1>}>
             <Switch>
-              <Route path="/" exact component={AsyncHome} />
+              <Route path="/Films-App" exact component={AsyncHome} />
               <Route path="/films/:id" component={AsyncFilmPage} />
               <Route path="/films" component={AsyncMoviesPage} />
             </Switch>

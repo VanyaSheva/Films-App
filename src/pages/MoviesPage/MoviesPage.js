@@ -2,11 +2,15 @@ import React, { Component } from "react";
 import getFilmsWithQuery from "../../services/getFilmsWithQuery";
 import FilmsList from "../../components/FilmsList/FilmsList";
 import queryString from "query-string";
+import InfiniteScroll from "react-infinite-scroll-component";
+import getInfifniteFilmsWithQuery from "../../services/getInfiniteFilmsWithQuery";
 import styles from "./SearchBar.module.css";
+let counter = 0;
 class MoviesPage extends Component {
   state = { query: "", filmsList: [] };
 
   componentDidMount() {
+    counter = 0;
     if (this.props.location.search) {
       const parsed = queryString.parse(this.props.location.search);
       this.setState({ query: parsed.category });
@@ -15,6 +19,13 @@ class MoviesPage extends Component {
       );
     }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      counter += 1;
+    }
+  }
+
   onFormSubmit = (e) => {
     e.preventDefault();
     getFilmsWithQuery(this.state.query).then((response) =>
@@ -29,6 +40,15 @@ class MoviesPage extends Component {
   onInputChange = (e) => {
     this.setState({ query: e.target.value });
   };
+
+  fetchMoreData = () => {
+    getInfifniteFilmsWithQuery(this.state.query, counter).then((response) =>
+      this.setState((state) => ({
+        filmsList: [...state.filmsList, ...response.data.results],
+      }))
+    );
+  };
+
   render() {
     const { query, filmsList } = this.state;
     return (
@@ -44,7 +64,13 @@ class MoviesPage extends Component {
           <button type="submit" className={styles.SearchFormButton}></button>
         </form>
         {filmsList.length > 0 && (
-          <FilmsList films={filmsList} location={query} />
+          <InfiniteScroll
+            dataLength={filmsList.length}
+            next={this.fetchMoreData}
+            hasMore={true}
+          >
+            <FilmsList films={filmsList} location={query} />
+          </InfiniteScroll>
         )}
       </>
     );
