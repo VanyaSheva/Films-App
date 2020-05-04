@@ -4,13 +4,21 @@
   align-items: center;
   width: 100%;
   max-width: 600px;
-  height: 30px;
+
   margin: 0 auto;
   list-style: none;
-  padding: 0;
   color: white;
+  padding: 20px 10px;
+  box-sizing: border-box;
 }
 .NavItem {
   text-decoration: none;
   font-size: 20px;
+}
+.NavLink {
+  color: rgba(224, 3, 3, 0.815);
+  transition: 0.2s ease-in;
+}
+.NavLink:hover {
+  color: red;
 }

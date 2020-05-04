@@ -66,9 +66,9 @@ class FilmPage extends Component {
             />
             <div className={styles.FilmDetails}>
               <div className={styles.FilmDetail}>
-                <h2>Описание</h2>
+                <h2>Информация о фильме:</h2>
                 {filmData.overview && <p>{filmData.overview}</p>}
-                {!filmData.overview && <p>К сожалению, описания нет</p>}
+                {!filmData.overview && <p>К сожалению, описания нет:(</p>}
               </div>
               <div className={styles.FilmDetail}>
                 <h3>Жанры:</h3>
@@ -82,13 +82,13 @@ class FilmPage extends Component {
               </div>
             </div>
 
-            <p>Дополнительная информация</p>
+            <p>Дополнительная информация:</p>
             <div className={styles.AdditionalInfoWrapper}>
               <Link to={`/films/${id}/reviews`}>
                 <p className={styles.AdditionalInfoText}>Обзоры</p>
               </Link>
               <Link to={`/films/${id}/cast`}>
-                <p className={styles.AdditionalInfoText}>Актеры</p>
+                <p className={styles.AdditionalInfoText}>Список актеров</p>
               </Link>
             </div>
             <Suspense fallback={<h1>Loading...</h1>}>

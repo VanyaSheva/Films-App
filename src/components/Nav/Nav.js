@@ -10,12 +10,12 @@ const Nav = () => (
   <ul className={styles.Nav}>
     <li className={styles.NavItem}>
       <NavLink to="/Films-App" exact activeStyle={ativeStyle}>
-        Home
+        <span className={styles.NavLink}>Home</span>
       </NavLink>
     </li>
     <li className={styles.NavItem}>
       <NavLink to="/films" activeStyle={ativeStyle}>
-        Movies
+        <span className={styles.NavLink}>Movies</span>
       </NavLink>
     </li>
   </ul>
