@@ -1,0 +1,63 @@
+.CastListItem {
+  display: flex;
+  max-width: 190px;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 10px;
+  margin: 5px 10px 15px;
+}
+.CastListImage {
+  display: block;
+  width: 100%;
+  min-width: 180px;
+  max-width: 300px;
+  min-height: 291px;
+  height: auto;
+  margin-bottom: 20px;
+}
+.Button {
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: rgb(255, 166, 0);
+  border: none;
+}
+/* Push */
+@-webkit-keyframes hvr-push {
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes hvr-push {
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.Button {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.Button:hover,
+.Button:focus,
+.Button:active {
+  -webkit-animation-name: hvr-push;
+  animation-name: hvr-push;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}

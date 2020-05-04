@@ -1,0 +1,19 @@
+:global(body) {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  background: #141414;
+}
+:global a {
+  text-decoration: none !important;
+}
+.Wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Montserrat", sans-serif;
+}
+.Header {
+  margin-bottom: 70px;
+}

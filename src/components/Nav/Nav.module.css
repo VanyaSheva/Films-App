@@ -1,0 +1,16 @@
+.Nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  height: 30px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+  color: white;
+}
+.NavItem {
+  text-decoration: none;
+  font-size: 20px;
+}
