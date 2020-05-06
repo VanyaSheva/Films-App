@@ -18,7 +18,6 @@ class FilmsList extends Component {
                     state: { from: this.props.location },
                   }}
                 >
-                  {" "}
                   <img
                     src={`https://image.tmdb.org/t/p/w300/${film.poster_path}`}
                     alt="film_post"

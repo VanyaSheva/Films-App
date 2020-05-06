@@ -17,8 +17,13 @@ class CastPage extends Component {
     });
   }
   componentDidUpdate(prevProps, prevState) {
+    const listHeight = getComputedStyle(
+      document.querySelector("#list")
+    ).height.replace(/[^0-9]/gim, "");
+    const heightToScrollDown =
+      document.documentElement.scrollHeight - listHeight - 200;
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
+      top: heightToScrollDown,
       behavior: "smooth",
     });
   }
@@ -28,7 +33,7 @@ class CastPage extends Component {
     return (
       <>
         {casts.length > 0 && (
-          <ul className={styles.CastList}>
+          <ul className={styles.CastList} id="list">
             {casts.map((cast) => (
               <Fragment key={cast.id}>
                 {cast.profile_path && <CastItem cast={cast} />}

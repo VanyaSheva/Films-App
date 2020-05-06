@@ -53,6 +53,10 @@
   font-size: 22px;
   color: orange;
 }
+.AdditionalInfo {
+  font-size: 19px;
+  color: red;
+}
 .Button {
   width: 28px;
   height: 28px;

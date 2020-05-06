@@ -15,6 +15,7 @@ const AsyncMoviesPage = lazy(() =>
     "../../pages/MoviesPage/MoviesPage" /* webpackChunkName: "movies-page" */
   )
 );
+
 class App extends Component {
   render() {
     return (

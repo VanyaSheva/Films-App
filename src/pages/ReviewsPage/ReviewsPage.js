@@ -22,8 +22,13 @@ class ReviewsPage extends Component {
     });
   };
   componentDidUpdate(prevProps, prevState) {
+    const listHeight = getComputedStyle(
+      document.querySelector("#list")
+    ).height.replace(/[^0-9]/gim, "");
+    const heightToScrollDown =
+      document.documentElement.scrollHeight - listHeight - 200;
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
+      top: heightToScrollDown,
       behavior: "smooth",
     });
   }
@@ -33,7 +38,7 @@ class ReviewsPage extends Component {
     return (
       <>
         {reviews.length > 0 && (
-          <ul className={styles.ReviewsList}>
+          <ul className={styles.ReviewsList} id="list">
             {reviews.map((review) => (
               <li key={review.id}>
                 <p>{review.author}</p>

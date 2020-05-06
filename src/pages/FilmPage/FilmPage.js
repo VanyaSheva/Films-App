@@ -3,6 +3,9 @@ import { Link, Route } from "react-router-dom";
 import getFilmWithId from "../../services/getFilmWithId";
 import styles from "./FilmPage.module.css";
 import PageNotFound from "../../components/PageNotFound/PageNotFound";
+import FilmsList from "../../components/FilmsList/FilmsList";
+import getRecommended from "../../services/getRecommendedFilms";
+
 let id;
 let category;
 
@@ -16,7 +19,7 @@ const AsyncCast = lazy(() =>
 );
 
 class FilmPage extends Component {
-  state = { filmData: null, showError: false };
+  state = { filmData: null, showError: false, recommended: null };
   componentDidMount() {
     if (this.props.location.state) {
       category = this.props.location.state.from;
@@ -25,7 +28,27 @@ class FilmPage extends Component {
     getFilmWithId(id)
       .then((response) => this.setState({ filmData: response.data }))
       .catch((error) => this.setState({ showError: true }));
+
+    getRecommended(id).then((response) =>
+      this.setState({ recommended: response.data.results.slice(0, 5) })
+    );
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      id = this.props.match.params.id;
+      this.setState({ filmData: null, showError: false, recommended: null });
+      getFilmWithId(id)
+        .then((response) => this.setState({ filmData: response.data }))
+        .catch((error) => this.setState({ showError: true }));
+
+      getRecommended(id).then((response) =>
+        this.setState({ recommended: response.data.results.slice(0, 5) })
+      );
+    }
+  }
+  // componentWillUnmount() {
+  //   this.setState({ filmData: null, showError: false, recommended: null });
+  // }
   handleGoBack = () => {
     if (!category) {
       this.props.history.push({
@@ -40,7 +63,7 @@ class FilmPage extends Component {
     });
   };
   render() {
-    const { filmData, showError } = this.state;
+    const { filmData, showError, recommended } = this.state;
     return (
       <>
         <button
@@ -51,7 +74,7 @@ class FilmPage extends Component {
         {filmData && (
           <div className={styles.FilmWrapper}>
             <h1>{filmData.title}</h1>
-            <h6>{filmData.original_title}</h6>
+            <h5>{filmData.original_title}</h5>
             {filmData.backdrop_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w500/${filmData.backdrop_path}`}
@@ -81,14 +104,19 @@ class FilmPage extends Component {
                 </ul>
               </div>
             </div>
-
-            <p>Дополнительная информация:</p>
+            <h4 className={styles.AdditionalInfoText}>
+              Также рекомендуем к просмотру:
+            </h4>
+            {recommended && <FilmsList films={recommended} />}
+            <p className={styles.AdditionalInfoText}>
+              Дополнительная информация:
+            </p>
             <div className={styles.AdditionalInfoWrapper}>
               <Link to={`/films/${id}/reviews`}>
-                <p className={styles.AdditionalInfoText}>Обзоры</p>
+                <p className={styles.AdditionalInfo}>Обзоры</p>
               </Link>
               <Link to={`/films/${id}/cast`}>
-                <p className={styles.AdditionalInfoText}>Список актеров</p>
+                <p className={styles.AdditionalInfo}>Список актеров</p>
               </Link>
             </div>
             <Suspense fallback={<h1>Loading...</h1>}>
