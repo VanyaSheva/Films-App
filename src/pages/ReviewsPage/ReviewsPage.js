@@ -22,15 +22,22 @@ class ReviewsPage extends Component {
     });
   };
   componentDidUpdate(prevProps, prevState) {
-    const listHeight = getComputedStyle(
-      document.querySelector("#list")
-    ).height.replace(/[^0-9]/gim, "");
-    const heightToScrollDown =
-      document.documentElement.scrollHeight - listHeight - 200;
-    window.scrollTo({
-      top: heightToScrollDown,
-      behavior: "smooth",
-    });
+    if (this.state.reviews.length > 0) {
+      const listHeight = getComputedStyle(
+        document.querySelector("#list")
+      ).height.replace(/[^0-9]/gim, "");
+      const heightToScrollDown =
+        document.documentElement.scrollHeight - listHeight;
+      window.scrollTo({
+        top: heightToScrollDown,
+        behavior: "smooth",
+      });
+    } else {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }
 
   render() {

@@ -4,14 +4,16 @@ import FilmsList from "../../components/FilmsList/FilmsList";
 import queryString from "query-string";
 import InfiniteScroll from "react-infinite-scroll-component";
 import getInfifniteFilmsWithQuery from "../../services/getInfiniteFilmsWithQuery";
+import QueryNotFound from "../../components/QueryNotFound/QueryNotFound";
 import styles from "./SearchBar.module.css";
-let counter = 0;
+let counter = 1;
+let invalidQuery;
 class MoviesPage extends Component {
-  state = { query: "", filmsList: [] };
+  state = { query: "", filmsList: [], showError: false };
 
   componentDidMount() {
-    counter = 0;
     if (this.props.location.search) {
+      counter = 1;
       const parsed = queryString.parse(this.props.location.search);
       this.setState({ query: parsed.category });
       getFilmsWithQuery(parsed.category).then((response) =>
@@ -20,17 +22,18 @@ class MoviesPage extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState !== this.state) {
-      counter += 1;
-    }
-  }
-
   onFormSubmit = (e) => {
+    counter = 1;
+    this.setState({ showError: false });
     e.preventDefault();
-    getFilmsWithQuery(this.state.query).then((response) =>
-      this.setState({ filmsList: response.data.results })
-    );
+    invalidQuery = this.state.query;
+    getFilmsWithQuery(this.state.query).then((response) => {
+      if (response.data.results.length > 0) {
+        this.setState({ filmsList: response.data.results });
+      } else {
+        this.setState({ filmsList: [], showError: true });
+      }
+    });
     this.props.history.push({
       pathname: this.props.location.pathname,
       search: `category=${this.state.query}`,
@@ -42,15 +45,22 @@ class MoviesPage extends Component {
   };
 
   fetchMoreData = () => {
-    getInfifniteFilmsWithQuery(this.state.query, counter).then((response) =>
-      this.setState((state) => ({
-        filmsList: [...state.filmsList, ...response.data.results],
-      }))
-    );
+    counter += 1;
+    getInfifniteFilmsWithQuery(this.state.query, counter).then((response) => {
+      let arrToAdd = [...this.state.filmsList, ...response.data.results];
+      let used = {};
+
+      let filtered = arrToAdd.filter(function (film) {
+        return film.id in used ? 0 : (used[film.id] = 1);
+      });
+      this.setState({
+        filmsList: filtered,
+      });
+    });
   };
 
   render() {
-    const { query, filmsList } = this.state;
+    const { query, filmsList, showError } = this.state;
     return (
       <>
         <form onSubmit={this.onFormSubmit} className={styles.SearchForm}>
@@ -65,13 +75,15 @@ class MoviesPage extends Component {
         </form>
         {filmsList.length > 0 && (
           <InfiniteScroll
-            dataLength={filmsList.length}
+            dataLength={filmsList}
             next={this.fetchMoreData}
             hasMore={true}
+            scrollThreshold={0.8}
           >
             <FilmsList films={filmsList} location={query} />
           </InfiniteScroll>
         )}
+        {showError && <QueryNotFound query={invalidQuery} />}
       </>
     );
   }
