@@ -1,25 +1,16 @@
 .ReviewsList {
   list-style: none;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px;
 }
 
-.ButtonToTop {
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  z-index: 99;
-  width: 28px;
-  height: 28px;
-  border: 0;
-  background-image: url("https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-512.png");
-  background-size: 90%;
-  background-repeat: no-repeat;
-  background-position: center;
-  color: white;
-  cursor: pointer;
-  border-radius: 10px;
-  font-size: 18px;
+.ReviewsListItem {
+  margin-bottom: 20px;
 }
-
-.ButtonToTop:hover {
-  background-color: orange;
+.ReviewsListItemAuthor {
+  font-size: 23px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
 }

@@ -1,6 +1,7 @@
 .FilmWrapper {
   color: white;
   margin: 0;
+  padding: 10px;
 }
 
 .FilmBackground {
@@ -13,12 +14,20 @@
   left: 0;
   filter: blur(10px) brightness(20%);
 }
+.Title {
+  margin-bottom: 10px;
+}
+.OriginanTitle {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
 .FilmPosterImage {
   display: block;
   width: 100%;
   max-width: 200px;
   min-height: 191px;
   height: auto;
+  margin-bottom: 20px;
 }
 .FilmDetails {
   display: flex;
@@ -27,8 +36,11 @@
   max-width: 1000px;
 }
 .FilmDetail {
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 30px;
+}
+.FilmInfo {
+  margin-bottom: 20px;
+  color: orange;
 }
 .GenresList {
   width: 100%;
@@ -48,6 +60,7 @@
   justify-content: space-between;
   width: 100%;
   margin-bottom: 40px;
+  padding-top: 10px;
 }
 .AdditionalInfoText {
   font-size: 22px;
@@ -114,4 +127,8 @@
   animation-timing-function: linear;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
+}
+.ActiveLink {
+  font-size: 22px;
+  color: rgb(241, 66, 66);
 }

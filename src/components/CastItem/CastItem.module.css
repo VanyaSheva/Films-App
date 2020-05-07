@@ -7,11 +7,11 @@
 
   max-width: 190px;
   margin: 10px 10px 25px;
-  transition: 0.1s ease-in;
 }
 
-.CastListItem:hover {
+.CastListImage:hover {
   transform: scale(1.03);
+  filter: brightness(123%);
 }
 .CastListImage {
   display: block;
@@ -20,6 +20,7 @@
   max-width: 300px;
   min-height: 291px;
   height: 300px;
+  transition: 0.1s ease-in;
   margin-bottom: 20px;
 }
 .Button {

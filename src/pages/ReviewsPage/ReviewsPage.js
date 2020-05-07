@@ -15,12 +15,7 @@ class ReviewsPage extends Component {
       }
     });
   }
-  onButtonClick = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.reviews.length > 0) {
       const listHeight = getComputedStyle(
@@ -47,17 +42,14 @@ class ReviewsPage extends Component {
         {reviews.length > 0 && (
           <ul className={styles.ReviewsList} id="list">
             {reviews.map((review) => (
-              <li key={review.id}>
-                <p>{review.author}</p>
+              <li key={review.id} className={styles.ReviewsListItem}>
+                <p className={styles.ReviewsListItemAuthor}>{review.author}:</p>
                 <p>{review.content}</p>
               </li>
             ))}
           </ul>
         )}
-        <button
-          onClick={this.onButtonClick}
-          className={styles.ButtonToTop}
-        ></button>
+
         {reviews.length === 0 && <p>К сожалению, обзоров нет</p>}
       </>
     );

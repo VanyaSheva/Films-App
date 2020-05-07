@@ -7,18 +7,17 @@
 
   margin: 0 auto;
   list-style: none;
-  color: white;
+
   padding: 20px 10px;
-  box-sizing: border-box;
 }
 .NavItem {
   text-decoration: none;
-  font-size: 20px;
+  font-size: 21px;
 }
 .NavLink {
   color: rgba(224, 3, 3, 0.815);
   transition: 0.2s ease-in;
 }
 .NavLink:hover {
-  color: red;
+  color: rgb(224, 3, 3);
 }

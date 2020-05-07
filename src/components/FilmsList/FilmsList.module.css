@@ -22,9 +22,8 @@
   width: 100%;
   min-width: 180px;
 
-  height: auto;
   box-shadow: 0px 20px 37px -5px rgba(0, 0, 0, 0.75);
-  max-height: 291px;
+  height: 291px;
 }
 .ListItemTitle {
   font-size: 13px;

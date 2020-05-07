@@ -1,5 +1,5 @@
 import React, { Component, lazy, Suspense } from "react";
-import { Link, Route } from "react-router-dom";
+import { Route, NavLink } from "react-router-dom";
 import getFilmWithId from "../../services/getFilmWithId";
 import styles from "./FilmPage.module.css";
 import PageNotFound from "../../components/PageNotFound/PageNotFound";
@@ -46,9 +46,7 @@ class FilmPage extends Component {
       );
     }
   }
-  // componentWillUnmount() {
-  //   this.setState({ filmData: null, showError: false, recommended: null });
-  // }
+
   handleGoBack = () => {
     if (!category) {
       this.props.history.push({
@@ -73,8 +71,8 @@ class FilmPage extends Component {
         ></button>
         {filmData && (
           <div className={styles.FilmWrapper}>
-            <h1>{filmData.title}</h1>
-            <h5>{filmData.original_title}</h5>
+            <h1 className={styles.Title}>{filmData.title}</h1>
+            <p className={styles.OriginanTitle}>{filmData.original_title}</p>
             {filmData.backdrop_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w500/${filmData.backdrop_path}`}
@@ -89,7 +87,7 @@ class FilmPage extends Component {
             />
             <div className={styles.FilmDetails}>
               <div className={styles.FilmDetail}>
-                <h2>Информация о фильме:</h2>
+                <h2 className={styles.FilmInfo}>Информация о фильме:</h2>
                 {filmData.overview && <p>{filmData.overview}</p>}
                 {!filmData.overview && <p>К сожалению, описания нет:(</p>}
               </div>
@@ -112,12 +110,24 @@ class FilmPage extends Component {
               Дополнительная информация:
             </p>
             <div className={styles.AdditionalInfoWrapper}>
-              <Link to={`/films/${id}/reviews`}>
+              <NavLink
+                to={`/films/${id}/reviews`}
+                activeStyle={{
+                  fontWeight: "bold",
+                  color: "red",
+                }}
+              >
                 <p className={styles.AdditionalInfo}>Обзоры</p>
-              </Link>
-              <Link to={`/films/${id}/cast`}>
+              </NavLink>
+              <NavLink
+                to={`/films/${id}/cast`}
+                activeStyle={{
+                  fontWeight: "bold",
+                  color: "red",
+                }}
+              >
                 <p className={styles.AdditionalInfo}>Список актеров</p>
-              </Link>
+              </NavLink>
             </div>
             <Suspense fallback={<h1>Loading...</h1>}>
               <Route path="/films/:id/reviews" component={AsyncReviews} />
