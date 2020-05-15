@@ -19,11 +19,17 @@ class HomePage extends Component {
     }
   }
   fetchMoreData = () => {
-    getInfifniteTrends(counter).then((response) =>
-      this.setState((state) => ({
-        popularFilms: [...state.popularFilms, ...response.data.results],
-      }))
-    );
+    getInfifniteTrends(counter).then((response) => {
+      let arrToAdd = [...this.state.popularFilms, ...response.data.results];
+      let used = {};
+
+      let filtered = arrToAdd.filter(function (film) {
+        return film.id in used ? 0 : (used[film.id] = 1);
+      });
+      this.setState({
+        popularFilms: filtered,
+      });
+    });
   };
 
   render() {

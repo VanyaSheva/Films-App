@@ -23,8 +23,10 @@ class FilmsList extends Component {
                     alt="film_post"
                     className={styles.ListItemImage}
                   />
-                  <h5 className={styles.ListItemTitle}>{film.title}</h5>
-                  <h6 className={styles.ListItemYear}>{film.release_date}</h6>
+                  <div className={styles.DescriptionContainer}>
+                    <h5 className={styles.ListItemTitle}>{film.title}</h5>
+                    <h6 className={styles.ListItemYear}>{film.release_date}</h6>
+                  </div>
                 </Link>
               </li>
             )}

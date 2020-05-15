@@ -81,7 +81,6 @@
   background-size: 90%;
   background-repeat: no-repeat;
   background-position: center;
-
   cursor: pointer;
   outline: none;
   background-color: orange;
@@ -89,7 +88,9 @@
   align-self: flex-end;
   margin-bottom: 30px;
 }
-
+.Button:hover {
+  opacity: 1;
+}
 /* Push */
 @-webkit-keyframes hvr-push {
   50% {

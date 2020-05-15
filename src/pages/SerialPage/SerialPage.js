@@ -1,10 +1,10 @@
 import React, { Component, lazy, Suspense } from "react";
 import { Route, NavLink } from "react-router-dom";
-import getFilmWithId from "../../services/getFilmWithId";
-import styles from "./FilmPage.module.css";
+import getSerialDetails from "../../services/getSerialDetails";
+import styles from "./SerialPage.module.css";
 import PageNotFound from "../../components/PageNotFound/PageNotFound";
-import FilmsList from "../../components/FilmsList/FilmsList";
-import getRecommended from "../../services/getRecommendedFilms";
+import SerialsList from "../../components/SerialsList/SerialsList";
+import getRecommendedSerials from "../../services/getRecommendedSerials";
 
 let id;
 let category;
@@ -18,30 +18,30 @@ const AsyncCast = lazy(() =>
   import("../../pages/CastPage/CastPage" /* webpackChunkName: "cast-page" */)
 );
 
-class FilmPage extends Component {
-  state = { filmData: null, showError: false, recommended: null };
+class SerialPage extends Component {
+  state = { serialData: null, showError: false, recommended: null };
   componentDidMount() {
     if (this.props.location.state) {
       category = this.props.location.state.from;
     }
     id = this.props.match.params.id;
-    getFilmWithId(id)
-      .then((response) => this.setState({ filmData: response.data }))
+    getSerialDetails(id)
+      .then((response) => this.setState({ serialData: response.data }))
       .catch((error) => this.setState({ showError: true }));
 
-    getRecommended(id).then((response) =>
+    getRecommendedSerials(id).then((response) =>
       this.setState({ recommended: response.data.results.slice(0, 5) })
     );
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       id = this.props.match.params.id;
-      this.setState({ filmData: null, showError: false, recommended: null });
-      getFilmWithId(id)
-        .then((response) => this.setState({ filmData: response.data }))
+      this.setState({ serialData: null, showError: false, recommended: null });
+      getSerialDetails(id)
+        .then((response) => this.setState({ serialData: response.data }))
         .catch((error) => this.setState({ showError: true }));
 
-      getRecommended(id).then((response) =>
+      getRecommendedSerials(id).then((response) =>
         this.setState({ recommended: response.data.results.slice(0, 5) })
       );
     }
@@ -50,51 +50,51 @@ class FilmPage extends Component {
   handleGoBack = () => {
     if (!category) {
       this.props.history.push({
-        pathname: "/",
+        pathname: "/serials",
       });
       return;
     }
 
     this.props.history.push({
-      pathname: "/films",
+      pathname: "/serials",
       search: `?category=${category}`,
     });
   };
   render() {
-    const { filmData, showError, recommended } = this.state;
+    const { serialData, showError, recommended } = this.state;
     return (
       <>
-        {filmData && (
+        {serialData && (
           <div className={styles.FilmWrapper}>
             <button
               type="button"
               onClick={this.handleGoBack}
               className={styles.Button}
             ></button>
-            <h1 className={styles.Title}>{filmData.title}</h1>
-            <p className={styles.OriginanTitle}>{filmData.original_title}</p>
-            {filmData.backdrop_path && (
+            <h1 className={styles.Title}>{serialData.title}</h1>
+            <p className={styles.OriginanTitle}>{serialData.original_title}</p>
+            {serialData.backdrop_path && (
               <img
-                src={`https://image.tmdb.org/t/p/w500/${filmData.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/w500/${serialData.backdrop_path}`}
                 alt="film_background_poster"
                 className={styles.FilmBackground}
               />
             )}
             <img
-              src={`https://image.tmdb.org/t/p/w500/${filmData.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500/${serialData.poster_path}`}
               alt="film_background_poster"
               className={styles.FilmPosterImage}
             />
             <div className={styles.FilmDetails}>
               <div className={styles.FilmDetail}>
                 <h2 className={styles.FilmInfo}>Информация о фильме:</h2>
-                {filmData.overview && <p>{filmData.overview}</p>}
-                {!filmData.overview && <p>К сожалению, описания нет:(</p>}
+                {serialData.overview && <p>{serialData.overview}</p>}
+                {!serialData.overview && <p>К сожалению, описания нет:(</p>}
               </div>
               <div className={styles.FilmDetail}>
                 <h3>Жанры:</h3>
                 <ul className={styles.GenresList}>
-                  {filmData.genres.map((genre) => (
+                  {serialData.genres.map((genre) => (
                     <li key={genre.id} className={styles.GenresListItem}>
                       {genre.name}
                     </li>
@@ -105,13 +105,13 @@ class FilmPage extends Component {
             <h4 className={styles.AdditionalInfoText}>
               Также рекомендуем к просмотру:
             </h4>
-            {recommended && <FilmsList films={recommended} />}
+            {recommended && <SerialsList serials={recommended} />}
             <p className={styles.AdditionalInfoText}>
               Дополнительная информация:
             </p>
             <div className={styles.AdditionalInfoWrapper}>
               <NavLink
-                to={`/films/${id}/reviews`}
+                to={`/serials/${id}/reviews`}
                 activeStyle={{
                   fontWeight: "bold",
                   color: "red",
@@ -120,7 +120,7 @@ class FilmPage extends Component {
                 <p className={styles.AdditionalInfo}>Обзоры</p>
               </NavLink>
               <NavLink
-                to={`/films/${id}/cast`}
+                to={`/serials/${id}/cast`}
                 activeStyle={{
                   fontWeight: "bold",
                   color: "red",
@@ -130,8 +130,8 @@ class FilmPage extends Component {
               </NavLink>
             </div>
             <Suspense fallback={<h1>Loading...</h1>}>
-              <Route path="/films/:id/reviews" component={AsyncReviews} />
-              <Route path="/films/:id/cast" component={AsyncCast} />
+              <Route path="/serials/:id/reviews" component={AsyncReviews} />
+              <Route path="/serials/:id/cast" component={AsyncCast} />
             </Suspense>
           </div>
         )}
@@ -141,4 +141,4 @@ class FilmPage extends Component {
   }
 }
 
-export default FilmPage;
+export default SerialPage;

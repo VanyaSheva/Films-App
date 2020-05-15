@@ -2,7 +2,6 @@
   "name": "module4",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://VanyaSheva.github.io/Films-App",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -11,9 +10,6 @@
     "gh-pages": "^2.2.0",
     "query-string": "^6.12.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-infinite-scroll-component": "^5.0.4",
-    "react-loadable": "^5.5.0",
     "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1"
@@ -24,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "netlify deploy -p"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,30 +1,32 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Nav.module.css";
+import "./index.css";
 
 const Nav = () => (
   <ul className={styles.Nav}>
     <li className={styles.NavItem}>
-      <NavLink
-        to="/Films-App"
-        exact
-        activeStyle={{
-          fontWeight: "bold",
-          color: "rgb(224, 3, 3)",
-        }}
-      >
-        <span className={styles.NavLink}>Home</span>
+      <NavLink to="/" exact activeClassName="active">
+        <span className={styles.NavLink}>Фильмы</span>
       </NavLink>
     </li>
     <li className={styles.NavItem}>
+      <NavLink to="/serials" activeClassName="active">
+        <span className={styles.NavLink}>Сериалы</span>
+      </NavLink>
+    </li>
+    <li className={styles.NavItem}>
+      <NavLink to="/cartoons" activeClassName="active">
+        <span className={styles.NavLink}>Мультфильмы</span>
+      </NavLink>
+    </li>
+    <li className={styles.NavLink}>
       <NavLink
         to="/films"
-        activeStyle={{
-          fontWeight: "bold",
-          color: "rgb(224, 3, 3)",
-        }}
+        activeClassName="activeSearch"
+        className={styles.NavSearch}
       >
-        <span className={styles.NavLink}>Movies</span>
+        <span className={styles.Search}></span>
       </NavLink>
     </li>
   </ul>

@@ -6,10 +6,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import getInfifniteFilmsWithQuery from "../../services/getInfiniteFilmsWithQuery";
 import QueryNotFound from "../../components/QueryNotFound/QueryNotFound";
 import styles from "./SearchBar.module.css";
+import Spinner from "../../helpers/Loader";
 let counter = 1;
 let invalidQuery;
 class MoviesPage extends Component {
-  state = { query: "", filmsList: [], showError: false };
+  state = { query: "", filmsList: [], showError: false, showLoader: false };
 
   componentDidMount() {
     if (this.props.location.search) {
@@ -24,14 +25,14 @@ class MoviesPage extends Component {
 
   onFormSubmit = (e) => {
     counter = 1;
-    this.setState({ showError: false });
+    this.setState({ showError: false, showLoader: true });
     e.preventDefault();
     invalidQuery = this.state.query;
     getFilmsWithQuery(this.state.query).then((response) => {
       if (response.data.results.length > 0) {
-        this.setState({ filmsList: response.data.results });
+        this.setState({ filmsList: response.data.results, showLoader: false });
       } else {
-        this.setState({ filmsList: [], showError: true });
+        this.setState({ filmsList: [], showError: true, showLoader: false });
       }
     });
     this.props.history.push({
@@ -60,7 +61,7 @@ class MoviesPage extends Component {
   };
 
   render() {
-    const { query, filmsList, showError } = this.state;
+    const { query, filmsList, showError, showLoader } = this.state;
     return (
       <>
         <form onSubmit={this.onFormSubmit} className={styles.SearchForm}>
@@ -73,6 +74,7 @@ class MoviesPage extends Component {
           />
           <button type="submit" className={styles.SearchFormButton}></button>
         </form>
+        {showLoader && <Spinner />}
         {filmsList.length > 0 && (
           <InfiniteScroll
             dataLength={filmsList}

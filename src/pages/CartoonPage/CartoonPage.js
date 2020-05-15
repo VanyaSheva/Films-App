@@ -1,9 +1,9 @@
 import React, { Component, lazy, Suspense } from "react";
 import { Route, NavLink } from "react-router-dom";
 import getFilmWithId from "../../services/getFilmWithId";
-import styles from "./FilmPage.module.css";
+import styles from "./CartoonPage.module.css";
 import PageNotFound from "../../components/PageNotFound/PageNotFound";
-import FilmsList from "../../components/FilmsList/FilmsList";
+import CartoonsList from "../../components/CartoonsList/CartoonsList";
 import getRecommended from "../../services/getRecommendedFilms";
 
 let id;
@@ -19,14 +19,14 @@ const AsyncCast = lazy(() =>
 );
 
 class FilmPage extends Component {
-  state = { filmData: null, showError: false, recommended: null };
+  state = { cartoonData: null, showError: false, recommended: null };
   componentDidMount() {
     if (this.props.location.state) {
       category = this.props.location.state.from;
     }
     id = this.props.match.params.id;
     getFilmWithId(id)
-      .then((response) => this.setState({ filmData: response.data }))
+      .then((response) => this.setState({ cartoonData: response.data }))
       .catch((error) => this.setState({ showError: true }));
 
     getRecommended(id).then((response) =>
@@ -36,9 +36,9 @@ class FilmPage extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       id = this.props.match.params.id;
-      this.setState({ filmData: null, showError: false, recommended: null });
+      this.setState({ cartoonData: null, showError: false, recommended: null });
       getFilmWithId(id)
-        .then((response) => this.setState({ filmData: response.data }))
+        .then((response) => this.setState({ cartoonData: response.data }))
         .catch((error) => this.setState({ showError: true }));
 
       getRecommended(id).then((response) =>
@@ -50,51 +50,51 @@ class FilmPage extends Component {
   handleGoBack = () => {
     if (!category) {
       this.props.history.push({
-        pathname: "/",
+        pathname: "/cartoons",
       });
       return;
     }
 
     this.props.history.push({
-      pathname: "/films",
+      pathname: "/cartoons",
       search: `?category=${category}`,
     });
   };
   render() {
-    const { filmData, showError, recommended } = this.state;
+    const { cartoonData, showError, recommended } = this.state;
     return (
       <>
-        {filmData && (
+        {cartoonData && (
           <div className={styles.FilmWrapper}>
             <button
               type="button"
               onClick={this.handleGoBack}
               className={styles.Button}
             ></button>
-            <h1 className={styles.Title}>{filmData.title}</h1>
-            <p className={styles.OriginanTitle}>{filmData.original_title}</p>
-            {filmData.backdrop_path && (
+            <h1 className={styles.Title}>{cartoonData.title}</h1>
+            <p className={styles.OriginanTitle}>{cartoonData.original_title}</p>
+            {cartoonData.backdrop_path && (
               <img
-                src={`https://image.tmdb.org/t/p/w500/${filmData.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/w500/${cartoonData.backdrop_path}`}
                 alt="film_background_poster"
                 className={styles.FilmBackground}
               />
             )}
             <img
-              src={`https://image.tmdb.org/t/p/w500/${filmData.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500/${cartoonData.poster_path}`}
               alt="film_background_poster"
               className={styles.FilmPosterImage}
             />
             <div className={styles.FilmDetails}>
               <div className={styles.FilmDetail}>
                 <h2 className={styles.FilmInfo}>Информация о фильме:</h2>
-                {filmData.overview && <p>{filmData.overview}</p>}
-                {!filmData.overview && <p>К сожалению, описания нет:(</p>}
+                {cartoonData.overview && <p>{cartoonData.overview}</p>}
+                {!cartoonData.overview && <p>К сожалению, описания нет:(</p>}
               </div>
               <div className={styles.FilmDetail}>
                 <h3>Жанры:</h3>
                 <ul className={styles.GenresList}>
-                  {filmData.genres.map((genre) => (
+                  {cartoonData.genres.map((genre) => (
                     <li key={genre.id} className={styles.GenresListItem}>
                       {genre.name}
                     </li>
@@ -105,13 +105,13 @@ class FilmPage extends Component {
             <h4 className={styles.AdditionalInfoText}>
               Также рекомендуем к просмотру:
             </h4>
-            {recommended && <FilmsList films={recommended} />}
+            {recommended && <CartoonsList cartoons={recommended} />}
             <p className={styles.AdditionalInfoText}>
               Дополнительная информация:
             </p>
             <div className={styles.AdditionalInfoWrapper}>
               <NavLink
-                to={`/films/${id}/reviews`}
+                to={`/cartoons/${id}/reviews`}
                 activeStyle={{
                   fontWeight: "bold",
                   color: "red",
@@ -120,7 +120,7 @@ class FilmPage extends Component {
                 <p className={styles.AdditionalInfo}>Обзоры</p>
               </NavLink>
               <NavLink
-                to={`/films/${id}/cast`}
+                to={`/cartoons/${id}/cast`}
                 activeStyle={{
                   fontWeight: "bold",
                   color: "red",
@@ -130,8 +130,8 @@ class FilmPage extends Component {
               </NavLink>
             </div>
             <Suspense fallback={<h1>Loading...</h1>}>
-              <Route path="/films/:id/reviews" component={AsyncReviews} />
-              <Route path="/films/:id/cast" component={AsyncCast} />
+              <Route path="/cartoons/:id/reviews" component={AsyncReviews} />
+              <Route path="/cartoons/:id/cast" component={AsyncCast} />
             </Suspense>
           </div>
         )}

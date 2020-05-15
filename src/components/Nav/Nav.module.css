@@ -3,11 +3,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 600px;
-
   margin: 0 auto;
   list-style: none;
-
   padding: 20px 10px;
 }
 .NavItem {
@@ -15,9 +12,31 @@
   font-size: 21px;
 }
 .NavLink {
-  color: rgba(224, 3, 3, 0.815);
   transition: 0.2s ease-in;
 }
 .NavLink:hover {
-  color: rgb(224, 3, 3);
+  color: orange;
+}
+
+.Search {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background-image: url("https://www.clipartmax.com/png/full/74-742441_preamps-white-search-icon-svg.png");
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  cursor: pointer;
+  outline: none;
+}
+.NavSearch {
+  border-top: 4px solid red;
+  border-bottom: 4px solid red;
+  transition: 0.2s ease-in;
+}
+.NavSearch:hover {
+  border-top: 4px solid orange;
+  border-bottom: 4px solid orange;
 }

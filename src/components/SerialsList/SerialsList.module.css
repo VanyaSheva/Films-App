@@ -1,4 +1,4 @@
-.FilmsList {
+.SerialsList {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -9,6 +9,7 @@
   width: 100%;
   margin: 0 auto;
 }
+
 .ListItem {
   max-width: 190px;
   margin: 10px 10px 25px;
@@ -19,6 +20,7 @@
   transform: scale(1.03);
   filter: brightness(120%);
 }
+
 .ListItemImage {
   display: block;
   width: 100%;
@@ -28,7 +30,7 @@
   height: 291px;
 }
 .ListItemTitle {
-  font-size: 11px;
+  font-size: 13px;
   color: white;
   margin: 10px 0;
 }
